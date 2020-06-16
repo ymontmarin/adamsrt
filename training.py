@@ -18,7 +18,7 @@ from adamsrt_sgdmrt import AdamSRT, AdamS, SGDMRT
 from adamsrt_sgdmrt.optimizers import AdamG
 
 # Imports best params from file in same place
-from .best_hyper_parameters import BEST_HYPER_PARAMETERS
+from best_hyper_parameters import BEST_HYPER_PARAMETERS
 
 
 ##############
