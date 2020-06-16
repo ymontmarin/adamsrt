@@ -6,19 +6,19 @@ from torch.optim import Adam, SGD, AdamW
 import torch.optim as optim
 import tqdm
 
-# Local imports
-from model.resnet import resnet20, resnet18
-from model.vgg import vgg16
+# Imports from librairy
+from adamsrt_sgdmrt.models import resnet20, resnet18, vgg16
 
-from dataloader.cifar10 import get_dataloader_cifar10
-from dataloader.cifar100 import get_dataloader_cifar100
-from dataloader.svhn import get_dataloader_SVHN
+from adamsrt_sgdmrt.dataloaders import (
+    get_dataloader_cifar10,
+    get_dataloader_cifar100,
+    get_dataloader_SVHN
+)
+from adamsrt_sgdmrt import AdamSRT, AdamS, SGDMRT
+from adamsrt_sgdmrt.optimizers import AdamG
 
-from optimizer.adam_srt import AdamSRT, AdamS
-from optimizer.sgd_mrt import SGDMRT
-from optimizer.adam_g import AdamG
-
-from best_hyper_parameters import BEST_HYPER_PARAMETERS
+# Imports best params from file in same place
+from .best_hyper_parameters import BEST_HYPER_PARAMETERS
 
 
 ##############
@@ -202,8 +202,8 @@ def pass_on_data(
     )
 
     def loop():
-        avg_loss = 0
-        avg_acc = 0
+        avg_loss = 0.
+        avg_acc = 0.
 
         for batch_idx, (data, target) in enumerate(tqdm_batch):
             data, target = (

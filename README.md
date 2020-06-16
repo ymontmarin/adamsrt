@@ -1,5 +1,5 @@
 # Spherical Perspective on Learning with Batch Norm.
-Simon Roburin\*, Yann de Mont-Marin\*, Andrei Bursuc, Renaud Marlet, Patrick Pérez, Mathieu Aubry
+[Simon Roburin](XXXX)\*, [Yann de Mont-Marin](XXXX)\*, [Andrei Bursuc](XXXX), [Renaud Marlet](XXXX), [Patrick Pérez](XXXX), [Mathieu Aubry](XXXX)
 \*equal contribution
 
 - [Project page](XXXXX)
@@ -7,13 +7,16 @@ Simon Roburin\*, Yann de Mont-Marin\*, Andrei Bursuc, Renaud Marlet, Patrick Pé
 
 
 ### Table of Content
+- [Abstract](#abstract)
 - [Setup](#setup)
 - [New optimization methods](#new-optimization-methods)
   - [AdamSRT](#adamsrt)
   - [SGDMRT](#sgdmrt)
   - [Usage](#usage)
-- [Benchmark](#training)
-- [Acknowledgements](#acknowledgement)
+- [Benchmark](#benchmark)
+  - [Results](#results)
+  - [Train models with optimizer](#train-models-with-optimizer)
+- [Acknowledgements](#acknowledgements)
 
 ## Setup
 To have the proper dependencies to reproduce the experiments performed in the paper you can install the librairies in `requirements.txt`.
@@ -27,6 +30,27 @@ pip install -r requirements.txt
 
 ### AdamSRT
 ### SGDMRT
+### Usage
+```python
+par_groups = [{'params': model.conv_params(), 'channel_wise'=True},
+              {'params': model.other_params()}]
+optimizer = SGDMRT(par_groups, lr=0.01, momentum=0.9)
+optimizer.zero_grad()
+loss_fn(model(input), target).backward()
+optimizer.step()
+```
+
+## Benchmark
+### Results
+
+
+### Train models with optimizer
+
+
+## Acknowledgements
+- For this project, we strongly relied on the [torch framework](https://github.com/pytorch/pytorch).
+
+- All the experiments present in the paper and in the tabular were run on the cluster infrastructure of Valeo
 
 ## Code usage
 You can try all the new methods proposed in the paper AdamS, AdamSRT and SGD-MRT. You can also use the benchmark methods Adam, AdamG, AdamW, SGD.
