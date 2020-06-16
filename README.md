@@ -1,4 +1,5 @@
-# Spherical Perspective on Learning with Batch Norm. New methods : AdamSRT and SGD-MRT
+# Spherical Perspective on Learning with Batch Norm.
+# New methods : AdamSRT and SGD-MRT
 [Simon Roburin](https://github.com/kdoublerotor)\*,
 [Yann de Mont-Marin](https://github.com/ymontmarin)\*,
 [Andrei Bursuc](XXXX),
