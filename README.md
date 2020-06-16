@@ -1,4 +1,4 @@
-# Spherical Perspective on Learning with Batch Norm.
+# Spherical Perspective on Learning with Batch Norm. New methods : AdamSRT and SGD-MRT
 [Simon Roburin](https://github.com/kdoublerotor)\*,
 [Yann de Mont-Marin](https://github.com/ymontmarin)\*,
 [Andrei Bursuc](XXXX),
@@ -27,9 +27,8 @@ If you find this code useful for your research, consider citing our paper:
 ### Table of Content
 - [Abstract](#abstract)
 - [Setup](#setup)
-- [New optimization methods](#new-optimization-methods)
-  - [AdamSRT](#adamsrt)
-  - [SGDMRT](#sgdmrt)
+- [New optimizers](#new-optimizers)
+  - [Methods](#methods)
   - [Usage](#usage)
 - [Benchmark](#benchmark)
   - [Results](#results)
@@ -59,14 +58,14 @@ With this, you can edit the code on the fly and import function and classes of t
 
 3. Optional. To uninstall this package, run:
 ```bash
-$ pip uninstall ConfidNet
+$ pip uninstall adamsrt-and-sgdmrt
 ```
 
 To import the package you just need:
 ```python
 import adamsrt_sgdmrt
 ```
-The content is as follow
+The package contain pytorch `Optimizer` for the new optimizers proposed in the paper as well as utilities to load classic models and dataset:
 ```
 adamsrt_sgdmrt.
     AdamSRT, AdamS, SGDMRT
@@ -79,9 +78,11 @@ adamsrt_sgdmrt.
 ```
 
 
-## New optimization methods
-### AdamSRT
-### SGDMRT
+## New optimizers
+### Methods
+The paper develop a geometrical framework which allow to identify behaviour of classical optimization methods: Adam and SGD. We introduce the rescaling and transport (RT) of the momentum and standardization (S) of the step division in Adam to nullify those effect. We can apply those transform into the optimization scheme with few lines of codes and introduce the optimizer AdamS, AdamSRT and SGDMRT.
+
+
 ### Usage
 Those optimizer are conceived to give a particular treatment on layer followed by BN (or other normalization layer). 
 To use  it with pytorch, you need to use paramgroups of pytorch (see the [doc](https://pytorch.org/docs/stable/optim.html#per-parameter-options)).
@@ -114,7 +115,7 @@ Individual rescaling (which is identical to classic optimization in our code) co
 
 `channel_wise=None` will throw the behavior of the classic optimizer.
 
-`channel_wise` is a binding for the most common case of a normalization in respect to channels (the first dimension): `channel_dims = [0]`.
+`channel_wise=True` is a binding for the most common case of a normalization in respect to channels (the first dimension): `channel_dims = [0]`.
 
 
 ## Benchmark
