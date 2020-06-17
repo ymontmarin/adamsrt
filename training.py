@@ -7,15 +7,15 @@ import torch.optim as optim
 import tqdm
 
 # Imports from librairy
-from adamsrt_sgdmrt.models import resnet20, resnet18, vgg16
+from adamsrt.models import resnet20, resnet18, vgg16
 
-from adamsrt_sgdmrt.dataloaders import (
+from adamsrt.dataloaders import (
     get_dataloader_cifar10,
     get_dataloader_cifar100,
     get_dataloader_SVHN
 )
-from adamsrt_sgdmrt import AdamSRT, AdamS, SGDMRT
-from adamsrt_sgdmrt.optimizers import AdamG
+from adamsrt import AdamSRT, AdamS, SGDMRT
+from adamsrt.optimizers import AdamG
 
 # Imports best params from file in same place
 from best_hyper_parameters import BEST_HYPER_PARAMETERS

@@ -46,29 +46,29 @@ To use the package properly you need python3 and it is recommanded to use CUDA10
 
 1. Clone the repo:
 ```bash
-$ git clone https://github.com/ymontmarin/adamsrt-and-sgdmrt
+$ git clone https://github.com/ymontmarin/adamsrt
 ```
 
 2. Install this repository and the dependencies using pip:
 ```bash
-$ pip install -e adamsrt-and-sgdmrt
+$ pip install -e adamsrt
 ```
 
 With this, you can edit the code on the fly and import function and classes of the package in other project as well.
 
 3. Optional. To uninstall this package, run:
 ```bash
-$ pip uninstall adamsrt-and-sgdmrt
+$ pip uninstall adamsrt
 ```
 
 To import the package you just need:
 ```python
-import adamsrt_sgdmrt
+import adamsrt
 ```
-The package contain pytorch `Optimizer` for the new optimizers proposed in the paper as well as utilities to load classic models and dataset:
+The package contain pytorch `Optimizer` for the new optimizers (AdamS, AdamSRT) proposed in the paper as well as utilities to load classic models and dataset and other optimizer (pytorch implementation of AdamG and SGD variant SGD-MRT):
 ```
-adamsrt_sgdmrt.
-    AdamSRT, AdamS, SGDMRT
+adamsrt.
+    AdamSRT, AdamS
     models.
         resnet18, resnet20, vgg16
     dataloaders.
@@ -80,15 +80,17 @@ adamsrt_sgdmrt.
 
 ## New optimizers
 ### Methods
-The paper introduce a geometrical framework which allows to identify behaviour of Adam which are not easily translated in the context of optimization on manifold. We introduce the rescaling and transport (RT) of the momentum and standardization (S) of the step division in Adam to neutralize these effects. We are able to apply these transformation to Adam and SGD with few lines of codes and introduce AdamS and AdamSRT.
+The paper introduce a geometrical framework which allows to identify behaviour of Adam which are not easily translated in the context of optimization on manifold. We introduce the rescaling and transport (RT) of the momentum and standardization (S) of the step division in Adam to neutralize these effects. We are able to apply these transformation to Adam with few lines of codes and introduce AdamS and AdamSRT.
 
 
 ### Usage
-These optimizers are conceived to give a particular treatment on layer followed by BN (or other normalization layer). 
+These optimizers (AdamSRT, AdamS) are conceived to give a particular treatment on layer followed by BN (or other normalization layer). 
 To use  it with pytorch, you need to use paramgroups of pytorch (see the [doc](https://pytorch.org/docs/stable/optim.html#per-parameter-options)).
-It allows you to specify the parameters followed by a normalization and activate the special treatment option for these parameters. The use looks like:
+It allows you to specify the parameters followed by a normalization and activate the special treatment option `channel_wise=True` for these parameters.
+
+The typical use for 2D convolutional networks where a convolutional layer is followed by a BN layer looks like:
 ```python
-from adamsrt_sgdmrt import AdamSRT
+from adamsrt import AdamSRT
 par_groups = [{'params': model.conv_params(), 'channel_wise'=True},
               {'params': model.other_params()}]
 optimizer = AdamSRT(par_groups, lr=0.001, betas=(0.9, 0.99), weight_decay=1e-4)
@@ -108,28 +110,21 @@ class CustomModel(MyModel):
                 conv_params.append(param)
         return conv_params
 ```
-Finally, there is two ways to activate the spherical special treatment on parameters followed by normalization layer.
-You can specify `channel_dims` as the list of dims that distinct entity that are normalized
-Typically in 2D convolutional neural network parameter tensor are of shape `CxHxWxC'`. BatchNorm normalize for each channel over previous channel and spatial dim : `channel_dims = [0]`. LayerNorm normalize all the layer and we have `channel_dims = []`.
-Individual rescaling (which is identical to classic optimization in our code) correspond to `channel_dims = [0,1,2,3]`.
-
-`channel_wise=None` will throw the behavior of the classic optimizer.
-
-`channel_wise=True` is a binding for the most common case of a normalization in respect to channels (the first dimension): `channel_dims = [0]`.
-
+Advanced details on the use of the optimizers can be found in `adamsrt/README.md`.
 
 ## Benchmark
 ### Results
-
+Methods AdamS and 
 | Method          | CIFAR10 ResNet20 | CIFAR10 ResNet18 | CIFAR10 VGG16 | CIFAR100 ResNet18 | CIFAR100 VGG16 | SVHN ResNet18 | SVHN VGG16 |
 | :-------------- | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: |
-| SGD-M           | 92.39 (0.12) | 95.10 (0.04) | 93.56 (0.05) | 77.08 (0.18) | 73.77 (0.10) | 95.96 (0.15) | 95.95 (0.09) |
+| SGD-M           | **92.39** (0.12) | **95.10** (0.04) | *93.56* (0.05) | **77.08** (0.18) | **73.77** (0.10) | **95.96** (0.15) | **95.95** (0.09) |
 | Adam            | 90.98 (0.06) | 93.77 (0.20) | 92.83 (0.17) | 71.30 (0.36) | 68.43 (0.16) | 95.32 (0.23) | 95.57 (0.20) |
 | AdamW           | 90.19 (0.24) | 93.61 (0.12) | 92.53 (0.25) | 67.39 (0.27) | 71.37 (0.22) | 95.38 (0.15) | 95.60 (0.08) |
 | AdamG           | 91.64 (0.17) | 94.67 (0.12) | 93.41 (0.17) | 73.76 (0.34) | 70.17 (0.20) | 95.73 (0.05) | 95.70 (0.25) |
-| Adam-S (ours)   | 91.15 (0.11) | 93.95 (0.23) | 92.92 (0.11) | 74.44 (0.22) | 68.73 (0.27) | 95.75 (0.09) | 95.66 (0.09) |
-| Adam-SRT (ours) | 91.81 (0.20) | 94.92 (0.05) | 93.75 (0.06) | 75.28 (0.35) | 71.45 (0.13) | 95.84 (0.07) | 95.82 (0.05) |
+| AdamS (ours)   | 91.15 (0.11) | 93.95 (0.23) | 92.92 (0.11) | 74.44 (0.22) | 68.73 (0.27) | 95.75 (0.09) | 95.66 (0.09) |
+| AdamSRT (ours) | *91.81* (0.20) | *94.92* (0.05) | **93.75** (0.06) | *75.28* (0.35) | *71.45* (0.13) | *95.84* (0.07) | *95.82* (0.05) |
 
+Where AdamSRT outperform classic Adam and existing variations (AdamW and AdamG) and breaching the gap in performance with SGD-M even outperforming it on the task CIFAR10 with VGG16.
 
 ### Train models with optimizer
 To reproduce the results of the paper, you can try all the proposed methods AdamS and AdamSRT. SGD-MRT can also be tested but leads to less systematic improvements.
@@ -141,7 +136,7 @@ The training is done over 400 epochs with a step-wise scheduling with 3 jumps.
 
 To launch the training you just need to call `training.py` with the proper options
 ```bash
-cd adamsrt-and-sgdmrt
+cd adamsrt
 python training.py --optimizer=adamsrt --model=resnet18 --dataloader=cifar100
 ```
 Logs will gives you the train and valid accuracy during the training as well as the test accuracy at the end of the training.
@@ -156,8 +151,6 @@ optimizer in ['adams', 'adamsrt', 'adamw', 'adam', 'adamg', 'sgd', 'sgdmrt']
 ## Acknowledgements
 - For this project, we strongly relied on the [torch framework](https://github.com/pytorch/pytorch).
 
-- All the experiments present in the paper and in the tabular were run on the cluster infrastructure of [valeo.ai](https://github.com/valeoai)
+- All the experiments present in the paper and in the tabular were run on the [valeo.ai](https://github.com/valeoai) cluster gpu infrastructure
 
-- We used the valeo.ai cluster gpu infrastructure
-
-- We thank Gabriel de Marmiesse for his precious help to conduct successfully all of our experiments
+- We thank [Gabriel de Marmiesse](https://github.com/gabrieldemarmiesse) for his precious help to conduct successfully all of our experiments
