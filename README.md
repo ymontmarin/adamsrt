@@ -39,7 +39,7 @@ If you find this code useful for your research, consider citing our paper:
 ## Abstract
 Batch Normalization (BN) is a prominent deep learning technique. In spite of its apparent simplicity, its implications over optimization are yet to be fully understood. In this paper, we study the optimization of neural networks with BN layers from a geometric perspective. We leverage the radial invariance of groups of parameters, such as neurons for multi-layer perceptrons or filters for convolutional neural networks, and translate several popular optimization schemes on the L<sub>2</sub> unit hypersphere. This formulation and the associated geometric interpretation sheds new light on the training dynamics and the relation between different optimization schemes. In particular, we use it to derive the effective learning rate of Adam and stochastic gradient descent (SGD) with momentum, and we show that in the presence of BN layers, performing SGD alone is actually equivalent to a variant of Adam constrained to the unit hypersphere. Our analysis also leads us to introduce new variants of Adam. We empirically show, over a variety of datasets and architectures, that they improve accuracy in classification tasks.
 
-This repository implements the new optimizer proposed in the paper AdamS, AdamSRT and SGDMRT and gives a `train.py` script to reproduce the benchmark results presented in the paper.
+This repository implements the new optimizer proposed in the paper AdamS and AdamSRT and gives a `train.py` script to reproduce the benchmark results presented in the paper.
 
 ## Setup
 To use the package properly you need python3 and it is recommanded to use CUDA10 for acceleration. The Installation is as follow:
@@ -80,7 +80,7 @@ adamsrt_sgdmrt.
 
 ## New optimizers
 ### Methods
-The paper introduce a geometrical framework which allows to identify behaviour of classical optimization methods (Adam and SGD) which are not easily translated in the context of optimization on manifold. We introduce the rescaling and transport (RT) of the momentum and standardization (S) of the step division in Adam to neutralize these effects. We are able to apply these transformation to Adam and SGD with few lines of codes and introduce AdamS, AdamSRT and SGDMRT.
+The paper introduce a geometrical framework which allows to identify behaviour of Adam which are not easily translated in the context of optimization on manifold. We introduce the rescaling and transport (RT) of the momentum and standardization (S) of the step division in Adam to neutralize these effects. We are able to apply these transformation to Adam and SGD with few lines of codes and introduce AdamS and AdamSRT.
 
 
 ### Usage
@@ -127,13 +127,13 @@ Individual rescaling (which is identical to classic optimization in our code) co
 | Adam            | 90.98 (0.06) | 93.77 (0.20) | 92.83 (0.17) | 71.30 (0.36) | 68.43 (0.16) | 95.32 (0.23) | 95.57 (0.20) |
 | AdamW           | 90.19 (0.24) | 93.61 (0.12) | 92.53 (0.25) | 67.39 (0.27) | 71.37 (0.22) | 95.38 (0.15) | 95.60 (0.08) |
 | AdamG           | 91.64 (0.17) | 94.67 (0.12) | 93.41 (0.17) | 73.76 (0.34) | 70.17 (0.20) | 95.73 (0.05) | 95.70 (0.25) |
-| SGD-MRT (ours)  | 92.25 (0.12) | 94.93 (0.23) | 93.68 (0.30) | 77.09 (0.15) | 73.32 (0.29) | 96.17 (0.12) | 95.95 (0.12) |
 | Adam-S (ours)   | 91.15 (0.11) | 93.95 (0.23) | 92.92 (0.11) | 74.44 (0.22) | 68.73 (0.27) | 95.75 (0.09) | 95.66 (0.09) |
 | Adam-SRT (ours) | 91.81 (0.20) | 94.92 (0.05) | 93.75 (0.06) | 75.28 (0.35) | 71.45 (0.13) | 95.84 (0.07) | 95.82 (0.05) |
 
 
 ### Train models with optimizer
-To reproduce the results of the paper, you can try all the proposed methods AdamS, AdamSRT and SGD-MRT. You can also use the benchmark methods Adam, AdamG, AdamW, SGD.
+To reproduce the results of the paper, you can try all the proposed methods AdamS and AdamSRT. SGD-MRT can also be tested but leads to less systematic improvements.
+You can use the benchmark methods Adam, AdamG, AdamW, SGD.
 As in the paper, training can be done on public dataset CIFAR10, CIFAR100, SVHN and the architecture ResNet18, VGG16 and ResNet20 (only for CIFAR10).
 For the training, the best parameters found in a previous grid search (cf Appendix E. Table 4) are used for the chosen setting. They are referenced in the file `best_hyper_parameters.py`.
 
