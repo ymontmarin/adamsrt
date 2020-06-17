@@ -7,10 +7,7 @@
 [Mathieu Aubry](XXXX)
 \
 \*equal contribution
-\
-*nom_de_la_conf, 2020*
 
-- [Project page](XXXXX)
 - [Paper](XXXXX)
 
 If you find this code useful for your research, consider citing our paper:
