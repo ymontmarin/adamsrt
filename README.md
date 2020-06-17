@@ -10,17 +10,6 @@
 
 - [Paper](XXXXX)
 
-If you find this code useful for your research, consider citing our paper:
-```
-@INPROCEEDINGS{roburinmontmarin20_sphere_BN,
-           title     = {Spherical Perspective on Learning with Batch Norm},
-           author    = {Simon, Roburin and Yann, de Mont-Marin and Andrei, Bursuc and Renaud, Marlet and Patrick, Pérez and Mathieu, Aubry},
-           booktitle = {XXXX},
-           year      = {2020}
-}
-```
-
-
 ### Table of Content
 - [Abstract](#abstract)
 - [Setup](#setup)
