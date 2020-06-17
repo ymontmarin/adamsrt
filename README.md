@@ -1,4 +1,4 @@
-# Spherical Perspective on Learning with Batch Norm. New methods : AdamSRT and SGD-MRT
+# Spherical Perspective on Learning with Batch Norm. New methods : AdamSRT
 [Simon Roburin](https://github.com/kdoublerotor)\*,
 [Yann de Mont-Marin](https://github.com/ymontmarin)\*,
 [Andrei Bursuc](XXXX),
@@ -39,7 +39,7 @@ If you find this code useful for your research, consider citing our paper:
 ## Abstract
 Batch Normalization (BN) is a prominent deep learning technique. In spite of its apparent simplicity, its implications over optimization are yet to be fully understood. In this paper, we study the optimization of neural networks with BN layers from a geometric perspective. We leverage the radial invariance of groups of parameters, such as neurons for multi-layer perceptrons or filters for convolutional neural networks, and translate several popular optimization schemes on the L<sub>2</sub> unit hypersphere. This formulation and the associated geometric interpretation sheds new light on the training dynamics and the relation between different optimization schemes. In particular, we use it to derive the effective learning rate of Adam and stochastic gradient descent (SGD) with momentum, and we show that in the presence of BN layers, performing SGD alone is actually equivalent to a variant of Adam constrained to the unit hypersphere. Our analysis also leads us to introduce new variants of Adam. We empirically show, over a variety of datasets and architectures, that they improve accuracy in classification tasks.
 
-This repository implements the new optimizer proposed AdamS, AdamSRT and SGDMRT and propose a `train.py` scripts to reproduce the benchmark results presented in the paper.
+This repository implements the new optimizer proposed in the paper AdamS, AdamSRT and SGDMRT and gives a `train.py` script to reproduce the benchmark results presented in the paper.
 
 ## Setup
 To use the package properly you need python3 and it is recommanded to use CUDA10 for acceleration. The Installation is as follow:
@@ -80,13 +80,13 @@ adamsrt_sgdmrt.
 
 ## New optimizers
 ### Methods
-The paper develop a geometrical framework which allow to identify behaviour of classical optimization methods: Adam and SGD. We introduce the rescaling and transport (RT) of the momentum and standardization (S) of the step division in Adam to nullify those effect. We can apply those transform into the optimization scheme with few lines of codes and introduce the optimizer AdamS, AdamSRT and SGDMRT.
+The paper introduce a geometrical framework which allows to identify behaviour of classical optimization methods (Adam and SGD) which are not easily translated in the context of optimization on manifold. We introduce the rescaling and transport (RT) of the momentum and standardization (S) of the step division in Adam to neutralize these effects. We are able to apply these transformation to Adam and SGD with few lines of codes and introduce AdamS, AdamSRT and SGDMRT.
 
 
 ### Usage
-Those optimizer are conceived to give a particular treatment on layer followed by BN (or other normalization layer). 
+These optimizers are conceived to give a particular treatment on layer followed by BN (or other normalization layer). 
 To use  it with pytorch, you need to use paramgroups of pytorch (see the [doc](https://pytorch.org/docs/stable/optim.html#per-parameter-options)).
-It allow you to specify the parameters followed by a normalization and activate the special treatment option for those parameters. The use looks like:
+It allows you to specify the parameters followed by a normalization and activate the special treatment option for these parameters. The use looks like:
 ```python
 from adamsrt_sgdmrt import AdamSRT
 par_groups = [{'params': model.conv_params(), 'channel_wise'=True},
@@ -134,10 +134,10 @@ Individual rescaling (which is identical to classic optimization in our code) co
 
 ### Train models with optimizer
 To reproduce the results of the paper, you can try all the proposed methods AdamS, AdamSRT and SGD-MRT. You can also use the benchmark methods Adam, AdamG, AdamW, SGD.
-As in the paper, training can be done on the dataset CIFAR10, CIFAR100, SVHN and the architecture ResNet18, VGG16 and ResNet20 (only for CIFAR10).
+As in the paper, training can be done on public dataset CIFAR10, CIFAR100, SVHN and the architecture ResNet18, VGG16 and ResNet20 (only for CIFAR10).
 For the training, the best parameters found in a previous grid search (cf Appendix E. Table 4) are used for the chosen setting. They are referenced in the file `best_hyper_parameters.py`.
 
-The training is done on 400 epochs with a step-wise scheduling with 3 jumps.
+The training is done over 400 epochs with a step-wise scheduling with 3 jumps.
 
 To launch the training you just need to call `training.py` with the proper options
 ```bash
@@ -157,3 +157,7 @@ optimizer in ['adams', 'adamsrt', 'adamw', 'adam', 'adamg', 'sgd', 'sgdmrt']
 - For this project, we strongly relied on the [torch framework](https://github.com/pytorch/pytorch).
 
 - All the experiments present in the paper and in the tabular were run on the cluster infrastructure of [valeo.ai](https://github.com/valeoai)
+
+- We used the valeo.ai cluster gpu infrastructure
+
+- We thank Gabriel de Marmiesse for his precious help to conduct successfully all of our experiments
