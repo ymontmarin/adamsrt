@@ -14,8 +14,8 @@ from adamsrt.dataloaders import (
     get_dataloader_cifar100,
     get_dataloader_SVHN
 )
-from adamsrt import AdamSRT, AdamS, SGDMRT
-from adamsrt.optimizers import AdamG
+from adamsrt import AdamSRT, AdamS
+from adamsrt.optimizers import AdamG, SGDMRT
 
 # Imports best params from file in same place
 from best_hyper_parameters import BEST_HYPER_PARAMETERS
