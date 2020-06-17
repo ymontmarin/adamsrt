@@ -65,7 +65,7 @@ To import the package you just need:
 ```python
 import adamsrt
 ```
-The package contain pytorch `Optimizer` for the new optimizers (AdamS, AdamSRT) proposed in the paper as well as utilities to load classic models and dataset and other optimizer (pytorch implementation of AdamG and SGD variant SGD-MRT):
+The package contains pytorch `Optimizer` for the new optimizers (AdamS, AdamSRT, SGDMRT) proposed in the paper as well as classes to load classic models and dataset and other optimizer (pytorch implementation of AdamG and SGD):
 ```
 adamsrt.
     AdamSRT, AdamS
@@ -80,12 +80,12 @@ adamsrt.
 
 ## New optimizers
 ### Methods
-The paper introduce a geometrical framework which allows to identify behaviour of Adam which are not easily translated in the context of optimization on manifold. We introduce the rescaling and transport (RT) of the momentum and standardization (S) of the step division in Adam to neutralize these effects. We are able to apply these transformation to Adam with few lines of codes and introduce AdamS and AdamSRT.
+The paper introduces a geometrical framework which allows to identify behaviour of Adam which are not easily translated in the context of optimization on manifold. We introduce the rescaling and transport (RT) of the momentum and standardization (S) of the step division in Adam to neutralize these effects. We are able to apply these transformations to Adam with only a few lines of code to propose AdamS and AdamSRT.
 
 
 ### Usage
-These optimizers (AdamSRT, AdamS) are conceived to give a particular treatment on layer followed by BN (or other normalization layer). 
-To use  it with pytorch, you need to use paramgroups of pytorch (see the [doc](https://pytorch.org/docs/stable/optim.html#per-parameter-options)).
+These optimizers (AdamSRT, AdamS) are built to give a specific treatment on layers followed by BN (or other normalization layer). 
+To use it with pytorch, you need to use paramgroups of pytorch (see the [doc](https://pytorch.org/docs/stable/optim.html#per-parameter-options)).
 It allows you to specify the parameters followed by a normalization and activate the special treatment option `channel_wise=True` for these parameters.
 
 The typical use for 2D convolutional networks where a convolutional layer is followed by a BN layer looks like:
@@ -114,7 +114,7 @@ Advanced details on the use of the optimizers can be found in `adamsrt/README.md
 
 ## Benchmark
 ### Results
-Methods AdamSRT and Adam has been benchmark over a range of classification datasets and architecture. They are compared to the classical counterpart Adam and its variant (AdamW, AdamG) as well as state of the art SGD-M.
+AdamSRT and Adam have been benchmark over a range of classification datasets and architecture. They are compared to the classical counterpart Adam and its variant (AdamW, AdamG) as well as state of the art SGD-M. For each architecture, each dataset we grid searched every hyperparameters and only selected the best to produce the following table.
 |      <sub><sup>Method</sup></sub>       | <sub><sup>CIFAR10 ResNet20</sup></sub>  | <sub><sup>CIFAR10 ResNet18</sup></sub>  |   <sub><sup>CIFAR10 VGG16</sup></sub>   | <sub><sup>CIFAR100 ResNet18</sup></sub> |  <sub><sup>CIFAR100 VGG16</sup></sub>   |   <sub><sup>SVHN ResNet18</sup></sub>   |    <sub><sup>SVHN VGG16</sup></sub>     |
 | :-------------------------------------- | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: |
 |       <sub><sup>SGD-M</sup></sub>       | <sub><sup>**92.39** (0.12)</sup></sub>  | <sub><sup>**95.10** (0.04)</sup></sub>  |  <sub><sup>*93.56* (0.05)</sup></sub>   | <sub><sup>**77.08** (0.18)</sup></sub>  | <sub><sup>**73.77** (0.10)</sup></sub>  | <sub><sup>**95.96** (0.15)</sup></sub>  | <sub><sup>**95.95** (0.09)</sup></sub>  |
@@ -126,7 +126,7 @@ Methods AdamSRT and Adam has been benchmark over a range of classification datas
 
 Where AdamSRT outperform classic Adam and existing variations (AdamW and AdamG) and breaching the gap in performance with SGD-M even outperforming it on the task CIFAR10 with VGG16.
 
-### Train models with optimizer
+### Trained models with optimizer
 To reproduce the results of the paper, you can try all the proposed methods AdamS and AdamSRT. SGD-MRT can also be tested but leads to less systematic improvements.
 You can use the benchmark methods Adam, AdamG, AdamW, SGD.
 As in the paper, training can be done on public dataset CIFAR10, CIFAR100, SVHN and the architecture ResNet18, VGG16 and ResNet20 (only for CIFAR10).
@@ -139,7 +139,7 @@ To launch the training you just need to call `training.py` with the proper optio
 cd adamsrt
 python training.py --optimizer=adamsrt --model=resnet18 --dataloader=cifar100
 ```
-Logs will gives you the train and valid accuracy during the training as well as the test accuracy at the end of the training.
+Logs will give you the train and valid accuracy during the training as well as the test accuracy at the end of the training.
 
 Options are :
 ```python
