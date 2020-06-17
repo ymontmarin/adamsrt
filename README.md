@@ -114,7 +114,9 @@ Advanced details on the use of the optimizers can be found in `adamsrt/README.md
 
 ## Benchmark
 ### Results
-Methods AdamS and 
+Methods AdamSRT and Adam has been benchmark over a range of classification datasets and architecture. They are compared to the classical counterpart Adam and its variant (AdamW, AdamG) as well as state of the art SGD-M.
+
+<sub><sup>
 | Method          | CIFAR10 ResNet20 | CIFAR10 ResNet18 | CIFAR10 VGG16 | CIFAR100 ResNet18 | CIFAR100 VGG16 | SVHN ResNet18 | SVHN VGG16 |
 | :-------------- | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: |
 | SGD-M           | **92.39** (0.12) | **95.10** (0.04) | *93.56* (0.05) | **77.08** (0.18) | **73.77** (0.10) | **95.96** (0.15) | **95.95** (0.09) |
@@ -123,6 +125,7 @@ Methods AdamS and
 | AdamG           | 91.64 (0.17) | 94.67 (0.12) | 93.41 (0.17) | 73.76 (0.34) | 70.17 (0.20) | 95.73 (0.05) | 95.70 (0.25) |
 | AdamS (ours)   | 91.15 (0.11) | 93.95 (0.23) | 92.92 (0.11) | 74.44 (0.22) | 68.73 (0.27) | 95.75 (0.09) | 95.66 (0.09) |
 | AdamSRT (ours) | *91.81* (0.20) | *94.92* (0.05) | **93.75** (0.06) | *75.28* (0.35) | *71.45* (0.13) | *95.84* (0.07) | *95.82* (0.05) |
+</sub></sup>
 
 Where AdamSRT outperform classic Adam and existing variations (AdamW and AdamG) and breaching the gap in performance with SGD-M even outperforming it on the task CIFAR10 with VGG16.
 
