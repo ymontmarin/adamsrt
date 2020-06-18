@@ -18,7 +18,7 @@
   - [Usage](#usage)
 - [Benchmark](#benchmark)
   - [Results](#results)
-  - [Train models with optimizer](#train-models-with-optimizer)
+  - [Reproduce the results](#reproduce-the-results)
 - [Acknowledgements](#acknowledgements)
 
 
@@ -112,7 +112,7 @@ AdamSRT and Adam have been benchmark over a range of classification datasets and
 
 Where AdamSRT outperform classic Adam and existing variations (AdamW and AdamG) and breaching the gap in performance with SGD-M even outperforming it on the task CIFAR10 with VGG16.
 
-### Trained models with optimizer
+### Reproduce the results
 To reproduce the results of the paper, you can try all the proposed methods AdamS and AdamSRT. SGD-MRT can also be tested but leads to less systematic improvements.
 You can use the benchmark methods Adam, AdamG, AdamW, SGD.
 As in the paper, training can be done on public dataset CIFAR10, CIFAR100, SVHN and the architecture ResNet18, VGG16 and ResNet20 (only for CIFAR10).
