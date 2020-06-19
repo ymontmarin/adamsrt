@@ -51,7 +51,7 @@ To import the package you just need:
 ```python
 import adamsrt
 ```
-The package contains pytorch `Optimizer` for the new optimizers (AdamS, AdamSRT, SGDMRT) proposed in the paper as well as classes to load classic models and dataset and other optimizer (pytorch implementation of AdamG and SGD):
+The package contains pytorch `Optimizer` for the new optimizers (AdamS, AdamSRT, SGDMRT) proposed in the paper as well as classes to load classic models and dataset and other optimizer (pytorch implementation of AdamG and paper variant of SGD SGD-MRT):
 ```
 adamsrt.
     AdamSRT, AdamS
