@@ -7,9 +7,17 @@ try:
 except ImportError:
     # for pip <= 9.0.3
     from pip.req import parse_requirements
+
+
 requirements_parsing = list(parse_requirements('./requirements.txt',
                                                session=False))
-install_requires = [str(r.req) for r in requirements_parsing]
+
+try:
+    # for pip < 20
+    install_requires = [str(r.req) for r in requirements_parsing]
+except AttributeError:
+    # for pip >= 20
+    install_requires = [str(r.requirement) for r in requirements_parsing]
 
 setup(
     name="adamsrt",
