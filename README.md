@@ -58,7 +58,7 @@ adamsrt.
     models.
         resnet18, resnet20, vgg16
     dataloaders.
-        get_dataloader_cifar10, get_dataloader_cifar100, get_dataloader_SVHN
+        get_dataloader_cifar10, get_dataloader_cifar100, get_dataloader_SVHN, get_dataloader_imagenet
     optimizers.
         AdamSRT, AdamS, SGDMRT, AdamG
 ```
