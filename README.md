@@ -42,7 +42,7 @@ $ pip install -e adamsrt
 
 With this, you can edit the code on the fly and import function and classes of the package in other project as well.
 
-3. Optional. To uninstall this package, run:
+3. Remove Optional. To uninstall this package, run:
 ```bash
 $ pip uninstall adamsrt
 ```
