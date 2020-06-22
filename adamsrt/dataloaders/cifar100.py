@@ -1,3 +1,5 @@
+from os.path import expanduser
+
 import torch
 from torch.utils.data import DataLoader, Subset
 from torchvision.datasets import CIFAR100
@@ -8,13 +10,12 @@ import torchvision.transforms as v_transforms
 MEAN = [0.5071, 0.4867, 0.4408]
 STD = [0.2675, 0.2565, 0.2761]
 
-data_folder = "/tmp/CIFAR100"
-
 
 def get_dataloader_cifar100(
     valid_split=0.05,
     train_batch_size=128,
     test_batch_size=128,
+    dataset_root_path="/tmp/CIFAR100",
     num_workers=1
 ):
     '''
@@ -32,6 +33,7 @@ def get_dataloader_cifar100(
         test_batch_size (int): size to use for test_loader, valid_loader
         num_workers (int): nuber of worker to use
     '''
+    dataset_root_path = expanduser(dataset_root_path)
     # Build regular data transformation
     train_transforms = v_transforms.Compose([
         v_transforms.RandomCrop(32, padding=4),
@@ -46,13 +48,13 @@ def get_dataloader_cifar100(
     ])
 
     train_dataset = CIFAR100(
-        data_folder,
+        dataset_root_path,
         train=True,
         transform=train_transforms,
         download=True
     )
     test_dataset = CIFAR100(
-        data_folder,
+        dataset_root_path,
         train=False,
         transform=test_transforms,
     )
@@ -68,20 +70,18 @@ def get_dataloader_cifar100(
         train_dataset,
         batch_size=train_batch_size,
         shuffle=True,
-        num_workers=1,
+        num_workers=num_workers,
         pin_memory=True
     )
     data_loader_valid = DataLoader(
         valid_dataset,
         batch_size=test_batch_size,
-        shuffle=True,
-        num_workers=1,
+        num_workers=num_workers,
         pin_memory=True
     )
     data_loader_test = DataLoader(
         test_dataset,
         batch_size=test_batch_size,
-        shuffle=True,
         num_workers=num_workers,
         pin_memory=True
     )

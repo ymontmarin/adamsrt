@@ -1,16 +1,16 @@
-import numpy as np
+from os.path import expanduser
+
 import torch
 from torch.utils.data import DataLoader, Subset
 from torchvision.datasets import SVHN
 import torchvision.transforms as v_transforms
-
-data_folder = "/tmp/SVHN"
 
 
 def get_dataloader_SVHN(
     valid_split=0.05,
     train_batch_size=128,
     test_batch_size=1024,
+    dataset_root_path="/tmp/SVHN",
     num_workers=1
 ):
     '''
@@ -28,6 +28,7 @@ def get_dataloader_SVHN(
         test_batch_size (int): size to use for test_loader, valid_loader
         num_workers (int): nuber of worker to use
     '''
+    dataset_root_path = expanduser(dataset_root_path)
     # Build regular data transformation
     train_transforms = v_transforms.Compose([
         v_transforms.ToTensor(),
@@ -38,13 +39,13 @@ def get_dataloader_SVHN(
     ])
 
     train_dataset = SVHN(
-        data_folder,
+        dataset_root_path,
         split='train',
         transform=train_transforms,
         download=True
     )
     test_dataset = SVHN(
-        data_folder,
+        dataset_root_path,
         split='test',
         transform=test_transforms,
         download=True
@@ -61,20 +62,18 @@ def get_dataloader_SVHN(
         train_dataset,
         batch_size=train_batch_size,
         shuffle=True,
-        num_workers=1,
+        num_workers=num_workers,
         pin_memory=True
     )
     data_loader_valid = DataLoader(
         valid_dataset,
         batch_size=test_batch_size,
-        shuffle=True,
-        num_workers=1,
+        num_workers=num_workers,
         pin_memory=True
     )
     data_loader_test = DataLoader(
         test_dataset,
         batch_size=test_batch_size,
-        shuffle=True,
         num_workers=num_workers,
         pin_memory=True
     )
