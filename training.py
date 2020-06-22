@@ -272,11 +272,11 @@ if __name__ == '__main__':
     # Check the compatibility of the choices
     if (
         renamed_args['model_name'] == 'resnet20' and
-        renamed_args['model_dataloader'] != 'cifar10'
+        renamed_args['dataloader_name'] != 'cifar10'
     ):
         raise Exception('resnet20 is only is_available for cifar10')
     if (
-        renamed_args['model_dataloader'] == 'imagenet' and
+        renamed_args['dataloader_name'] == 'imagenet' and
         renamed_args['model_name'] != 'resnet18'
     ):
         raise Exception('Imagenet is only is_available with resnet18')
