@@ -101,14 +101,14 @@ Advanced details on the use of the optimizers can be found in `adamsrt/README.md
 ## Benchmark
 ### Results
 AdamSRT and Adam have been benchmark over a range of classification datasets and architecture. They are compared to the classical counterpart Adam and its variant (AdamW, AdamG) as well as state of the art SGD-M. For each architecture, each dataset we grid searched every hyperparameters and only selected the best to produce the following table.
-|      <sub><sup>Method</sup></sub>       | <sub><sup>CIFAR10 ResNet20</sup></sub>  | <sub><sup>CIFAR10 ResNet18</sup></sub>  |   <sub><sup>CIFAR10 VGG16</sup></sub>   | <sub><sup>CIFAR100 ResNet18</sup></sub> |  <sub><sup>CIFAR100 VGG16</sup></sub>   |   <sub><sup>SVHN ResNet18</sup></sub>   |    <sub><sup>SVHN VGG16</sup></sub>     |
-| :-------------------------------------- | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: |
-|       <sub><sup>SGD-M</sup></sub>       | <sub><sup>**92.39** (0.12)</sup></sub>  | <sub><sup>**95.10** (0.04)</sup></sub>  |  <sub><sup>*93.56* (0.05)</sup></sub>   | <sub><sup>**77.08** (0.18)</sup></sub>  | <sub><sup>**73.77** (0.10)</sup></sub>  | <sub><sup>**95.96** (0.15)</sup></sub>  | <sub><sup>**95.95** (0.09)</sup></sub>  |
-|       <sub><sup>Adam</sup></sub>        |   <sub><sup>90.98 (0.06)</sup></sub>    |   <sub><sup>93.77 (0.20)</sup></sub>    |   <sub><sup>92.83 (0.17)</sup></sub>    |   <sub><sup>71.30 (0.36)</sup></sub>    |   <sub><sup>68.43 (0.16)</sup></sub>    |   <sub><sup>95.32 (0.23)</sup></sub>    |   <sub><sup>95.57 (0.20)</sup></sub>    |
-|       <sub><sup>AdamW</sup></sub>       |   <sub><sup>90.19 (0.24)</sup></sub>    |   <sub><sup>93.61 (0.12)</sup></sub>    |   <sub><sup>92.53 (0.25)</sup></sub>    |   <sub><sup>67.39 (0.27)</sup></sub>    |   <sub><sup>71.37 (0.22)</sup></sub>    |   <sub><sup>95.38 (0.15)</sup></sub>    |   <sub><sup>95.60 (0.08)</sup></sub>    |
-|       <sub><sup>AdamG</sup></sub>       |   <sub><sup>91.64 (0.17)</sup></sub>    |   <sub><sup>94.67 (0.12)</sup></sub>    |   <sub><sup>93.41 (0.17)</sup></sub>    |   <sub><sup>73.76 (0.34)</sup></sub>    |   <sub><sup>70.17 (0.20)</sup></sub>    |   <sub><sup>95.73 (0.05)</sup></sub>    |   <sub><sup>95.70 (0.25)</sup></sub>    |
-|   <sub><sup>AdamS (ours)</sup></sub>    |   <sub><sup>91.15 (0.11)</sup></sub>    |   <sub><sup>93.95 (0.23)</sup></sub>    |   <sub><sup>92.92 (0.11)</sup></sub>    |   <sub><sup>74.44 (0.22)</sup></sub>    |   <sub><sup>68.73 (0.27)</sup></sub>    |   <sub><sup>95.75 (0.09)</sup></sub>    |   <sub><sup>95.66 (0.09)</sup></sub>    |
-|  <sub><sup>AdamSRT (ours)</sup></sub>   |  <sub><sup>*91.81* (0.20)</sup></sub>   |  <sub><sup>*94.92* (0.05)</sup></sub>   | <sub><sup>**93.75** (0.06)</sup></sub>  |  <sub><sup>*75.28* (0.35)</sup></sub>   |  <sub><sup>*71.45* (0.13)</sup></sub>   |  <sub><sup>*95.84* (0.07)</sup></sub>   |  <sub><sup>*95.82* (0.05)</sup></sub>   |
+|      <sub><sup>Method</sup></sub>       | <sub><sup>CIFAR10 ResNet20</sup></sub>  | <sub><sup>CIFAR10 ResNet18</sup></sub>  |   <sub><sup>CIFAR10 VGG16</sup></sub>   | <sub><sup>CIFAR100 ResNet18</sup></sub> |  <sub><sup>CIFAR100 VGG16</sup></sub>   |   <sub><sup>SVHN ResNet18</sup></sub>   |    <sub><sup>SVHN VGG16</sup></sub>     | <sub><sup>ImageNet ResNet20</sup></sub> |
+| :-------------------------------------- | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: |
+|       <sub><sup>SGD-M</sup></sub>       | <sub><sup>**92.39** (0.12)</sup></sub>  | <sub><sup>**95.10** (0.04)</sup></sub>  |  <sub><sup>*93.56* (0.05)</sup></sub>   | <sub><sup>**77.08** (0.18)</sup></sub>  | <sub><sup>**73.77** (0.10)</sup></sub>  | <sub><sup>**95.96** (0.15)</sup></sub>  | <sub><sup>**95.95** (0.09)</sup></sub>  |  <sub><sup>**69.86**(0.06)</sup></sub>  |
+|       <sub><sup>Adam</sup></sub>        |   <sub><sup>90.98 (0.06)</sup></sub>    |   <sub><sup>93.77 (0.20)</sup></sub>    |   <sub><sup>92.83 (0.17)</sup></sub>    |   <sub><sup>71.30 (0.36)</sup></sub>    |   <sub><sup>68.43 (0.16)</sup></sub>    |   <sub><sup>95.32 (0.23)</sup></sub>    |   <sub><sup>95.57 (0.20)</sup></sub>    |   <sub><sup>68.52 (0.10)</sup></sub>    |
+|       <sub><sup>AdamW</sup></sub>       |   <sub><sup>90.19 (0.24)</sup></sub>    |   <sub><sup>93.61 (0.12)</sup></sub>    |   <sub><sup>92.53 (0.25)</sup></sub>    |   <sub><sup>67.39 (0.27)</sup></sub>    |   <sub><sup>71.37 (0.22)</sup></sub>    |   <sub><sup>95.38 (0.15)</sup></sub>    |   <sub><sup>95.60 (0.08)</sup></sub>    |                 -                       |
+|       <sub><sup>AdamG</sup></sub>       |   <sub><sup>91.64 (0.17)</sup></sub>    |   <sub><sup>94.67 (0.12)</sup></sub>    |   <sub><sup>93.41 (0.17)</sup></sub>    |   <sub><sup>73.76 (0.34)</sup></sub>    |   <sub><sup>70.17 (0.20)</sup></sub>    |   <sub><sup>95.73 (0.05)</sup></sub>    |   <sub><sup>95.70 (0.25)</sup></sub>    |                 -                       |
+|   <sub><sup>AdamS (ours)</sup></sub>    |   <sub><sup>91.15 (0.11)</sup></sub>    |   <sub><sup>93.95 (0.23)</sup></sub>    |   <sub><sup>92.92 (0.11)</sup></sub>    |   <sub><sup>74.44 (0.22)</sup></sub>    |   <sub><sup>68.73 (0.27)</sup></sub>    |   <sub><sup>95.75 (0.09)</sup></sub>    |   <sub><sup>95.66 (0.09)</sup></sub>    |   <sub><sup>68.82 (0.22)</sup></sub>    |
+|  <sub><sup>AdamSRT (ours)</sup></sub>   |  <sub><sup>*91.81* (0.20)</sup></sub>   |  <sub><sup>*94.92* (0.05)</sup></sub>   | <sub><sup>**93.75** (0.06)</sup></sub>  |  <sub><sup>*75.28* (0.35)</sup></sub>   |  <sub><sup>*71.45* (0.13)</sup></sub>   |  <sub><sup>*95.84* (0.07)</sup></sub>   |  <sub><sup>*95.82* (0.05)</sup></sub>   |   <sub><sup>*68.93*(0.19)</sup></sub>   |
 
 Where AdamSRT outperform classic Adam and existing variations (AdamW and AdamG) and breaching the gap in performance with SGD-M even outperforming it on the task CIFAR10 with VGG16.
 
@@ -129,10 +129,12 @@ Logs will give you the train and valid accuracy during the training as well as t
 
 Options are :
 ```python
-dataloader in ['cifar10', 'cifar100', 'svhn']
+dataloader in ['cifar10', 'cifar100', 'svhn', 'imagenet']
 model in ['resnet18', 'resnet20', 'vgg16']
 optimizer in ['adams', 'adamsrt', 'adamw', 'adam', 'adamg', 'sgd', 'sgdmrt']
 ```
+`resnet20` is only available for `cifar10` and `imagenet` is only available with `resnet20`.
+To use `imagenet` you need to provide the path to imagenet data folder by editing the file `adamsrt/config.py`.
 
 ## Acknowledgements
 - For this project, we strongly relied on the [torch framework](https://github.com/pytorch/pytorch).
