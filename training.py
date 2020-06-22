@@ -264,13 +264,21 @@ if __name__ == '__main__':
     parser.add_argument("--optimizer", default="adamsrt",
                         choices=list(OPTIMIZERS.keys()))
 
-    print(list(DATALOADERS.keys()))
-    print(list(MODELS.keys()))
-    print(list(OPTIMIZERS.keys()))
-
     args = parser.parse_args()
     renamed_args = {}
     for key, val in vars(args).items():
         renamed_args['_'.join([key, 'name'])] = val
+
+    # Check the compatibility of the choices
+    if (
+        renamed_args['model_name'] == 'resnet20' and
+        renamed_args['model_dataloader'] != 'cifar10'
+    ):
+        raise Exception('resnet20 is only is_available for cifar10')
+    if (
+        renamed_args['model_dataloader'] == 'imagenet' and
+        renamed_args['model_name'] != 'resnet18'
+    ):
+        raise Exception('Imagenet is only is_available with resnet18')
 
     main(**renamed_args)
