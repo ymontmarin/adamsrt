@@ -12,7 +12,8 @@ from adamsrt.models import resnet20, resnet18, vgg16
 from adamsrt.dataloaders import (
     get_dataloader_cifar10,
     get_dataloader_cifar100,
-    get_dataloader_SVHN
+    get_dataloader_SVHN,
+    get_dataloader_imagenet
 )
 from adamsrt import AdamSRT, AdamS
 from adamsrt.optimizers import AdamG, SGDMRT
@@ -45,6 +46,11 @@ DATALOADERS = {
         'dataloader_getter': get_dataloader_SVHN,
         'num_classes': 10,
     },
+    'imagenet': {
+        'dataloader_getter': get_dataloader_imagenet,
+        'num_classes': 1000,
+        'large_arch': True,
+    }
 }
 
 MODELS = {
@@ -79,11 +85,12 @@ def main(dataloader_name, model_name, optimizer_name):
     torch.manual_seed(0)
 
     # Get appropriate dataloader
-    dataloader_getter = DATALOADERS[dataloader_name]['dataloader_getter']
+    dataloader_args = DATALOADERS[dataloader_name].copy()
+    dataloader_getter = dataloader_args.pop('dataloader_getter')
     loader_train, loader_valid, loader_test = dataloader_getter()
 
-    # Build model with appropriate classes
-    model = MODELS[model_name](DATALOADERS[dataloader_name]['num_classes'])
+    # Build model with appropriate num classes and large arch if needed
+    model = MODELS[model_name](**dataloader_args)
     model.to(device)
 
     # Create losses

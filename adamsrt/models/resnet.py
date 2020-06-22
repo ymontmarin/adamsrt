@@ -12,11 +12,28 @@ def resnet20(num_classes):
     )
 
 
-def resnet18(num_classes):
+def resnet18(num_classes, large_arch=False):
+    """
+    Implement both large and small image version of ResNet18
+    """
+    if large_arch:
+        large = True
+        maxpool = True
+        adaptative_pool = True
+        pool_size = None
+    else:
+        large = False
+        maxpool = False
+        adaptative_pool = False
+        pool_size = 4
+
     return ResNet(
         num_classes=num_classes,
         init_in_planes=64,
-        pool_size=4,
+        large=large,
+        maxpool=maxpool,
+        adaptative_pool=adaptative_pool,
+        pool_size=pool_size,
         block=BasicBlock,
         layer_num_blocks=[2, 2, 2, 2],
     )
