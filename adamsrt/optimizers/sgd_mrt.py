@@ -86,7 +86,7 @@ class SGDMRT(Optimizer):
                     continue
                 grad = p.grad.data
                 if weight_decay != 0.:
-                    grad.add_(weight_decay, p.data)
+                    grad.add_(p.data, alpha=weight_decay)
 
                 # Get state
                 state = self.state[p]
@@ -115,12 +115,12 @@ class SGDMRT(Optimizer):
                 buf = state['momentum_buffer']
 
                 # Update buffer
-                buf.mul_(momentum).add_(1 - dampening, grad)
+                buf.mul_(momentum).add_(grad, alpha=1 - dampening)
 
                 if dot_ope.dim > 1:
                     prev_data = p.data.clone().detach()
 
-                p.data.add_(-group['lr'], buf)
+                p.data.add_(buf, alpha=-group['lr'])
 
                 # We are on a sphere, we do RT transform
                 if dot_ope.dim > 1:

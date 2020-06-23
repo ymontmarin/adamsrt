@@ -82,8 +82,8 @@ class AdamSRT(Optimizer):
         Performs a single optimizatino step
         """
         for group in self.param_groups:
-            eps = group['eps']
             for p in group['params']:
+
                 # Get grad of params to update
                 if p.grad is None:
                     continue
@@ -93,7 +93,7 @@ class AdamSRT(Optimizer):
                         'RMSprop does not support sparse gradients'
                     )
                 if group['weight_decay'] != 0.:
-                    grad.add_(group['weight_decay'], p.data)
+                    grad.add_(p.data, alpha=group['weight_decay'])
 
                 # Get state
                 state = self.state[p]
@@ -129,28 +129,31 @@ class AdamSRT(Optimizer):
 
                 # Retrive moments and constant
                 exp_avg, exp_avg_sq = state['exp_avg'], state['exp_avg_sq']
-                beta1, beta2 = group['betas']
+                b1, b2 = group['betas']
 
                 # Update momentums
-                exp_avg.mul_(beta1).add_(1 - beta1, grad)
-                exp_avg_sq.mul_(beta2).add_((1 - beta2) / dot_ope.dim, dot_ope(grad, grad))
+                exp_avg.mul_(b1).add_(grad, alpha=1 - b1)
+                exp_avg_sq.mul_(b2).add_(dot_ope(grad, grad), alpha=1 - b2)
+                # It should be d^-1 * (1 - beta2) instead
+                # To avoid double div with > 1 we multiply stepsize by d^1/2
 
                 # Compute bias correction
-                bias_correction1 = 1 - beta1 ** state['step']
-                bias_correction2 = 1 - beta2 ** state['step']
+                bias_correction1 = 1 - b1 ** state['step']
+                bias_correction2 = 1 - b2 ** state['step']
 
                 # Compute actual nom and denom for the step
                 nom = exp_avg / bias_correction1
                 denom = (
                     exp_avg_sq.sqrt() / math.sqrt(bias_correction2)
-                ).add_(eps)
+                ).add_(group['eps'])
 
                 # Prepare data temporary copy for RT transform if needed
                 if dot_ope.dim > 1 and group['rt']:
                     prev_data = p.data.clone().detach()
 
                 # Take the step on the datas
-                p.data.addcdiv_(-group['lr'], nom, denom)
+                step_size = group['lr'] * math.sqrt(dot_ope.dim)
+                p.data.addcdiv_(nom, denom, value=-step_size)
 
                 # We are on a sphere, we do RT transform
                 if dot_ope.dim > 1 and group['rt']:
@@ -159,14 +162,18 @@ class AdamSRT(Optimizer):
                     new_norm_sq = dot_ope(new_data, new_data)
                     scal_x1_x2 = dot_ope(prev_data, new_data)
                     scal_m_x2 = dot_ope(exp_avg, new_data)
-                    # R  order two moment
-                    exp_avg_sq.mul_(prev_norm_sq / (new_norm_sq + eps))
+                    # R  order 2 moment
+                    (
+                        exp_avg_sq
+                        .mul_(prev_norm_sq)
+                        .div_(new_norm_sq + group['eps'])
+                    )
                     # RT the order 1 moment
                     (
                         exp_avg
                         .mul_(scal_x1_x2)
                         .add_(-scal_m_x2 * prev_data)
-                        .div_(new_norm_sq + eps)
+                        .div_(new_norm_sq + group['eps'])
                     )
 
     @staticmethod
@@ -232,5 +239,5 @@ class AdamS(AdamSRT):
             weight_decay=weight_decay,
             channel_dims=channel_dims,
             channel_wise=channel_wise,
-            rt=False
+            rt=False  # Never do RT
         )

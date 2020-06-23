@@ -176,7 +176,7 @@ def full_procedure(
             torch.save(model.state_dict(), BEST_PATH)
             print('SAVING BEST PARAMS')
         scheduler.step()
-        print(f'lr set to {scheduler.get_lr()[0]}')
+        print(f'lr set to {scheduler.get_last_lr()[0]}')
     # Make a final test pass on best params
     print(f'LOADING BEST PARAMS OF ITERATION {i_best}')
     checkpoint = torch.load(BEST_PATH)
