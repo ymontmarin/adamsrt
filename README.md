@@ -142,3 +142,12 @@ To use `imagenet` you need to provide the path to imagenet data folder by editin
 - All the experiments present in the paper and in the tabular were run on the [valeo.ai](https://github.com/valeoai) cluster gpu infrastructure
 
 - We thank [Gabriel de Marmiesse](https://github.com/gabrieldemarmiesse) for his precious help to conduct successfully all of our experiments
+
+## To cite our paper
+
+```@article{roburin2020spherical,
+    author    = {Roburin, Simon  and de Mont-Marin, Yann  and Bursuc, Andrei  and Marlet, Renaud  and Perez, Patrick  and Aubry, Mathieu},
+    title     = {Spherical Perspective on Learning with Batch Norm},
+    journal = {arXiv preprint arXiv:2020.xxxxx},
+    year      = {2020}}
+```
