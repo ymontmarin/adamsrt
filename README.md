@@ -8,7 +8,7 @@
 \
 \*equal contribution
 
-- [Paper](XXXXX)
+- [Paper](https://arxiv.org/abs/2006.13382)
 
 ### Table of Content
 - [Abstract](#abstract)
