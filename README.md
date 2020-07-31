@@ -8,7 +8,7 @@
 \
 \*equal contribution
 
-- [Paper](XXXXX)
+- [Paper](https://arxiv.org/abs/2006.13382)
 
 ### Table of Content
 - [Abstract](#abstract)
@@ -145,9 +145,11 @@ To use `imagenet` you need to provide the path to imagenet data folder by editin
 
 ## To cite our paper
 
-```@article{roburin2020spherical,
+```
+@article{roburin2020spherical,
     author    = {Roburin, Simon  and de Mont-Marin, Yann  and Bursuc, Andrei  and Marlet, Renaud  and Perez, Patrick  and Aubry, Mathieu},
     title     = {Spherical Perspective on Learning with Batch Norm},
     journal = {arXiv preprint arXiv:2020.xxxxx},
-    year      = {2020}}
+    year      = {2020}
+}
 ```
